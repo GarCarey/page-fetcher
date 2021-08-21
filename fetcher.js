@@ -15,10 +15,11 @@ if (typeof(location) === "undefined"){
 request(source, (error, response, body) => {
   if (error) {
     console.log('Error: ', error);
+  } else if (response.statusCode !== 200) {
+    console.log('Please check for a valid URL!');
   } else {
     checkFileExists(location, response, body);
   }
-
 });
 
 //Write function allows us to write the response to a new file
