@@ -5,6 +5,12 @@ const location = args[1];
 const request = require('request');
 const fs = require('fs');
 
+//checks for a valid file path
+if (typeof(location) === "undefined"){
+  console.log('Please check for valid file path');
+  process.exit();
+}
+
 //request function to request info of source
 request(source, (error, response, body) => {
   if (error) {
@@ -25,6 +31,7 @@ const writeToFile = (response, body) => {
   });
 };
 
+//checks to see if file already exists
 const checkFileExists = (location, response, body) => {
   fs.access(location, fs.constants.F_OK, err => {
     if (err) {
