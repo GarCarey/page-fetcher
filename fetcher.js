@@ -10,7 +10,7 @@ request(source, (error, response, body) => {
   if (error) {
     console.log('Error: ', error);
   } else {
-    writeToFile(response, body);
+    checkFileExists(location, response, body);
   }
 
 });
@@ -22,5 +22,16 @@ const writeToFile = (response, body) => {
       console.log(`Error: `, err);
     } 
     console.log(`Downloaded and saved ${response.headers['content-length']} bytes to ${location}`);
+  });
+};
+
+const checkFileExists = (location, response, body) => {
+  fs.access(location, fs.constants.F_OK, err => {
+    if (err) {
+      writeToFile(response, body);
+    } else {
+      console.log('This file will be overwritten!') 
+      writeToFile(response, body);
+    }
   });
 };
